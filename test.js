@@ -2,6 +2,8 @@ import needle from 'needle';
 
 const BASE_URL = 'http://localhost:3000';
 
+// still not functioning in the browser pero nagccreate na siya ng tama sa books.txt
+
 // testing a book
 const addBook = async (book) => {
     const res = await needle('post', `${BASE_URL}/add-book`, book, { json: true });
