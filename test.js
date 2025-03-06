@@ -2,6 +2,23 @@ import needle from 'needle';
 
 const BASE_URL = 'http://localhost:3000';
 
+// testing a book
+const addBook = async (book) => {
+    const res = await needle('post', `${BASE_URL}/add-book`, book, { json: true });
+    console.log('Add Book Response:', res.body);
+};
+
+// isbn only
+const findByIsbnAndAuthor = async (isbn, author) => {
+    const res = await needle('get', `${BASE_URL}/find-by-isbn-author?isbn=${isbn}&author=${encodeURIComponent(author)}`);
+    console.log('Find by ISBN and Author Response:', res.body);
+};
+
+// author only
+const findByAuthor = async (author) => {
+    const res = await needle('get', `${BASE_URL}/find-by-author?author=${encodeURIComponent(author)}`);
+    console.log('Find by Author Response:', res.body);
+};
 
 // Run tests
 (async () => {
