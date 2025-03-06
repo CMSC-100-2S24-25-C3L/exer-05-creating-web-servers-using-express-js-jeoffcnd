@@ -66,6 +66,32 @@ function isUniqueISBN(book, isbn) {
 
 
 
+app.post('/add-book', (req, res) => {
+    // get the details
+
+    const { book_name, ISBN, author, year_published } = req.body;
+
+    // if none, error
+    if (!book_name || !ISBN || !author || !year_published) {
+        console.log('false');
+        return res.json({ success: false, message: "Error. Some or all fields are missing" });
+    }
+    
+    // read
+    const books = readBooks();
+    // if meron na existing (avoid for dupes)
+    if (!isUniqueISBN(books, ISBN)) {
+        console.log('false');
+        return res.json({ success: false, message: "ISBN already exists" });
+    }
+
+
+    // save success
+    const success = saveBook({ book_name, ISBN, author, year_published });
+    console.log(success ? 'true' : 'false'); // input true if meron, false if none (checker)
+    res.json({ success });
+});
+
 
 
 
