@@ -94,6 +94,47 @@ app.post('/add-book', (req, res) => {
 
 
 
+// for isbn and author 
+app.get('/find-by-isbn-author', (req, res) => {
+    
+    // get the isbn and author
+    const { isbn, author } = req.query;
+    
+    // if error for isbn and author
+    if (!isbn || !author) {
+        console.log('false');
+        return res.json({ success: false, message: "Both ISBN and author must be provided" });
+    }
+    
+    // if meron
+    const books = readBooks();
+    const result = books.find(book => book.ISBN === isbn && book.author === author);
+    console.log(result ? 'true' : 'false'); // for checker 
+    res.json(result ? { success: true, book: result } : { success: false, message: "Book not found" });
+});
+
+
+
+
+// same but author naman
+app.get('/find-by-author', (req, res) => {
+
+    // get the author 
+    const { author } = req.query;
+
+    // if no author
+    if (!author) {
+        console.log('false'); // checker
+        return res.json({ success: false, message: "Author is required" });
+    }
+    
+    // if meron naman, do process
+    const books = readBooks();
+    const result = books.filter(book => book.author === author); // checks if same
+    console.log(result.length ? 'true' : 'false'); // printing checker
+    res.json(result.length ? { success: true, books: result } : { success: false, message: "No books found" });
+});
+
 
 // start of the server
 const PORT = 3000;
