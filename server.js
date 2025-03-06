@@ -46,6 +46,27 @@ function readBooks() {
 
 
 
+function saveBook(book) {
+    //  // https://www.geeksforgeeks.org/node-js-fs-appendfilesync-function/
+    try {
+        // lagay sa books.txt
+        fs.appendFileSync(BOOKS_FILE, `${book.book_name},${book.ISBN},${book.author},${book.year_published}\n`);
+        return true;
+    } catch (err) { // if none
+        console.error("Error saving the file:", err);
+        return false;
+    }
+}
+
+function isUniqueISBN(book, isbn) {
+    // https://www.geeksforgeeks.org/javascript-program-to-find-duplicate-elements-in-an-array/
+    // lalagay sa isang array lahat ng kasame ng hinahanap mong isbn, so if meron atleast 1, ibig sabihin duplicated na siya
+    return books.filter(book => book.ISBN === isbn).length === 0;
+}
+
+
+
+
 
 
 // start of the server
